@@ -67,10 +67,6 @@ export default function ChecklistPage({ gears }) {
   return (
     <div className="page">
       <section className="hero">
-        <div className="hero-badge">
-          <Backpack size={14} color="#e67e22" />
-          <span>Pre-Departure Expedition Packing</span>
-        </div>
         <h1>Checklist Persiapan Ekspedisi</h1>
         <p className="lede">
           Pastikan setiap perlengkapan vital telah terkemas ke dalam carrier. Pantau total beban
@@ -172,3 +168,4 @@ export default function ChecklistPage({ gears }) {
     </div>
   )
 }
+

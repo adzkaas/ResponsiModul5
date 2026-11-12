@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Search, Scale, Package, Layers, SlidersHorizontal, Eye } from 'lucide-react'
+import { Search, Scale, Package, SlidersHorizontal, Eye } from 'lucide-react'
 import GearDetailModal from '../components/modals/GearDetailModal'
 
 export default function CatalogPage({ gears, onGoToCrud, onEditGear, onDeleteGear }) {
@@ -49,10 +49,6 @@ export default function CatalogPage({ gears, onGoToCrud, onEditGear, onDeleteGea
     <div className="page">
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-badge">
-          <Layers size={14} color="#e67e22" />
-          <span>Basecamp Hardware &amp; Logistics Hub</span>
-        </div>
         <h1>Logistik &amp; Perlengkapan Ekspedisi</h1>
         <p className="lede">
           Pantau kesiapan peralatan lapangan, akumulasi bobot ransel, dan status kelaikan operasional
@@ -189,3 +185,4 @@ export default function CatalogPage({ gears, onGoToCrud, onEditGear, onDeleteGea
     </div>
   )
 }
+

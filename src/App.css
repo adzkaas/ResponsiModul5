@@ -78,20 +78,9 @@ body {
 
 .brand-title {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   letter-spacing: -0.02em;
   color: #ffffff;
-}
-
-.brand-badge {
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: rgba(230, 126, 34, 0.25);
-  color: #f39c12;
-  border: 1px solid rgba(243, 156, 18, 0.4);
-  padding: 1px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.05em;
 }
 
 .nav {
@@ -127,28 +116,6 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.status-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.status-chip.online {
-  background: rgba(22, 163, 74, 0.2);
-  color: #4ade80;
-  border: 1px solid rgba(74, 222, 128, 0.3);
-}
-
-.status-chip.offline {
-  background: rgba(234, 179, 8, 0.2);
-  color: #fde047;
-  border: 1px solid rgba(253, 224, 71, 0.3);
 }
 
 .header-cta {
@@ -191,19 +158,6 @@ body {
   padding-bottom: 24px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #fef3c7;
-  color: #92400e;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  margin-bottom: 10px;
 }
 
 .hero h1 {
@@ -1302,3 +1256,4 @@ body {
     display: none;
   }
 }
+

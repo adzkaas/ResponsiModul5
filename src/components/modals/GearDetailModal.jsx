@@ -103,3 +103,4 @@ export default function GearDetailModal({ gear, open, onClose, onEdit, onDelete 
     </div>
   )
 }
+

@@ -66,3 +66,4 @@ export const INITIAL_GEARS = [
     image_url: '',
   },
 ]
+

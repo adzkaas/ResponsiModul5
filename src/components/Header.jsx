@@ -1,4 +1,4 @@
-import { Mountain, Plus, Cloud, CloudOff } from 'lucide-react'
+import { Mountain, Plus } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'Catalog', label: 'Katalog Alat' },
@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { id: 'Profile', label: 'Profil Praktikan' },
 ]
 
-export default function Header({ activeTab, onChangeTab, onNavigateCreate, isOffline, dataSource }) {
+export default function Header({ activeTab, onChangeTab, onNavigateCreate }) {
   return (
     <header className="header">
       <div
@@ -20,7 +20,6 @@ export default function Header({ activeTab, onChangeTab, onNavigateCreate, isOff
         </div>
         <div className="brand-text">
           <span className="brand-title">SummitGear</span>
-          <span className="brand-badge">PWA</span>
         </div>
       </div>
 
@@ -38,30 +37,6 @@ export default function Header({ activeTab, onChangeTab, onNavigateCreate, isOff
       </nav>
 
       <div className="header-actions">
-        {/* Indikator Status Cloud / Offline */}
-        <div
-          className={`status-chip ${isOffline || dataSource === 'offline_cache' ? 'offline' : 'online'}`}
-          title={
-            isOffline
-              ? 'Mode Offline: Menggunakan penyimpanan lokal'
-              : dataSource === 'supabase'
-              ? 'Terhubung langsung ke Supabase Cloud DB'
-              : 'Penyimpanan Offline Cache Aktif'
-          }
-        >
-          {isOffline || dataSource === 'offline_cache' ? (
-            <>
-              <CloudOff size={13} />
-              <span>Offline Cache</span>
-            </>
-          ) : (
-            <>
-              <Cloud size={13} />
-              <span>Supabase Cloud</span>
-            </>
-          )}
-        </div>
-
         {onNavigateCreate && (
           <button
             type="button"

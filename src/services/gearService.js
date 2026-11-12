@@ -245,3 +245,4 @@ class GearService {
 }
 
 export default new GearService()
+

@@ -219,3 +219,4 @@ git push -u origin main
 5. Klik **Deploy**.
 6. Tunggu sekitar 1 menit hingga build selesai. Vercel akan menghasilkan domain aktif (misal: `https://summitgear-pwa.vercel.app`).
 7. Salin link tersebut dan kumpulkan pada form responsi praktikum.
+

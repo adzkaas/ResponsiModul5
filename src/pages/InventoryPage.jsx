@@ -7,7 +7,6 @@ import {
   CheckCircle,
   AlertCircle,
   Package,
-  Layers,
   X,
 } from 'lucide-react'
 import ConfirmModal from '../components/modals/ConfirmModal'
@@ -155,10 +154,6 @@ export default function InventoryPage({
       {/* Page Header */}
       <div className="page-head">
         <div>
-          <div className="hero-badge">
-            <Layers size={14} color="#e67e22" />
-            <span>Penyimpanan: {isOffline || dataSource === 'offline_cache' ? 'Offline Cache' : 'Supabase Cloud'}</span>
-          </div>
           <h1>Manajemen Inventaris (CRUD)</h1>
           <p className="lede">
             Kelola data logistik perlengkapan basecamp (Create, Read, Update, Delete) secara instan.
@@ -448,3 +443,4 @@ export default function InventoryPage({
     </div>
   )
 }
+

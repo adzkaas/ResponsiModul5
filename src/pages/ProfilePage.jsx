@@ -5,7 +5,6 @@ import {
   CheckCircle,
   Camera,
   RotateCcw,
-  Shield,
   Smartphone,
   HardDrive,
   Wifi,
@@ -88,10 +87,6 @@ export default function ProfilePage() {
   return (
     <div className="page">
       <section className="hero">
-        <div className="hero-badge">
-          <Shield size={14} color="#e67e22" />
-          <span>Praktikan Profil &amp; Pengembang Aplikasi</span>
-        </div>
         <h1>Profil Praktikan PPB</h1>
         <p className="lede">
           Identitas pengembang aplikasi Progressive Web App (PWA) SummitGear — Basecamp Logistics.
@@ -257,3 +252,4 @@ export default function ProfilePage() {
     </div>
   )
 }
+

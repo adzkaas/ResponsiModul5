@@ -50,8 +50,6 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
         onNavigateCreate={handleNavigateCreate}
-        isOffline={isOffline}
-        dataSource={source}
       />
 
       <main className="main-content">
@@ -88,3 +86,4 @@ export default function App() {
     </div>
   )
 }
+

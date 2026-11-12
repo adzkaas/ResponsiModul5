@@ -104,3 +104,4 @@ VALUES
     'Lengkap dengan perban steril, povidone, plester medis, thermal emergency blanket, gunting trauma.',
     ARRAY['Isi: 45 item medis', 'Kemasan: Pouch Cordura Tahan Air']
   );
+
