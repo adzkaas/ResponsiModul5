@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14261c"/>
+      <stop offset="100%" stop-color="#0b1710"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f39c12"/>
+      <stop offset="100%" stop-color="#e67e22"/>
+    </linearGradient>
+    <linearGradient id="snow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Subtle glow ring -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="rgba(230, 126, 34, 0.2)" stroke-width="4" stroke-dasharray="8 8"/>
+
+  <!-- Outer Mountains -->
+  <polygon points="90,380 210,210 330,380" fill="#1b3a2a" opacity="0.9"/>
+  <polygon points="210,210 240,250 210,270 180,250" fill="url(#snow)"/>
+
+  <polygon points="230,380 370,180 500,380" fill="#244b36" opacity="0.85"/>
+  <polygon points="370,180 405,230 370,250 335,230" fill="url(#snow)"/>
+
+  <!-- Foreground Main Summit -->
+  <polygon points="120,380 256,130 410,380" fill="#2d5e44"/>
+
+  <!-- Snow Cap on Main Summit -->
+  <polygon points="256,130 306,210 280,200 256,220 232,200 206,210" fill="url(#snow)"/>
+
+  <!-- Sun / Compass Star -->
+  <circle cx="390" cy="120" r="32" fill="url(#accent)"/>
+  <polygon points="390,75 396,114 435,120 396,126 390,165 384,126 345,120 384,114" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Campfire / Logistics Flame Accent -->
+  <path d="M256,335 C248,350 240,360 240,372 C240,382 247,390 256,390 C265,390 272,382 272,372 C272,360 264,350 256,335 Z" fill="url(#accent)"/>
+</svg>
