@@ -1,48 +1,8 @@
-import { useState, useEffect } from 'react'
-import { Download, WifiOff, X, Check } from 'lucide-react'
+import { useState } from 'react'
+import { Download, WifiOff, X } from 'lucide-react'
 
-export default function PWABadge() {
-  const [installPrompt, setInstallPrompt] = useState(null)
-  const [isOffline, setIsOffline] = useState(!navigator.onLine)
-  const [installed, setInstalled] = useState(false)
+export default function PWABadge({ onInstallApp, isInstalled, isOffline }) {
   const [dismissed, setDismissed] = useState(false)
-
-  useEffect(() => {
-    const onBeforeInstall = (e) => {
-      e.preventDefault()
-      setInstallPrompt(e)
-    }
-
-    const onAppInstalled = () => {
-      setInstalled(true)
-      setInstallPrompt(null)
-    }
-
-    const onOnline = () => setIsOffline(false)
-    const onOffline = () => setIsOffline(true)
-
-    window.addEventListener('beforeinstallprompt', onBeforeInstall)
-    window.addEventListener('appinstalled', onAppInstalled)
-    window.addEventListener('online', onOnline)
-    window.addEventListener('offline', onOffline)
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', onBeforeInstall)
-      window.removeEventListener('appinstalled', onAppInstalled)
-      window.removeEventListener('online', onOnline)
-      window.removeEventListener('offline', onOffline)
-    }
-  }, [])
-
-  const handleInstall = async () => {
-    if (!installPrompt) return
-    installPrompt.prompt()
-    const { outcome } = await installPrompt.userChoice
-    if (outcome === 'accepted') {
-      setInstalled(true)
-    }
-    setInstallPrompt(null)
-  }
 
   if (dismissed) return null
 
@@ -53,8 +13,7 @@ export default function PWABadge() {
         <div className="pwa-banner-text">
           <WifiOff size={18} />
           <span>
-            <strong>Mode Offline Aktif</strong> — Anda tetap dapat melihat, menambah, dan mengedit
-            inventaris ekspedisi.
+            <strong>Mode Offline Aktif</strong> — Anda tetap dapat melihat inventaris ekspedisi.
           </span>
         </div>
         <button
@@ -69,8 +28,8 @@ export default function PWABadge() {
     )
   }
 
-  // Banner Instalasi PWA
-  if (installPrompt && !installed) {
+  // Banner Instalasi PWA (selalu tampil jika belum ter-install agar tombol install tidak hilang)
+  if (!isInstalled) {
     return (
       <aside className="pwa-banner" role="region" aria-label="Instalasi Aplikasi PWA">
         <div className="pwa-banner-text">
@@ -80,7 +39,7 @@ export default function PWABadge() {
           </span>
         </div>
         <div className="pwa-banner-actions">
-          <button type="button" className="btn btn--primary btn--sm" onClick={handleInstall}>
+          <button type="button" className="btn btn--primary btn--sm" onClick={onInstallApp}>
             <Download size={14} /> Install
           </button>
           <button
@@ -98,4 +57,3 @@ export default function PWABadge() {
 
   return null
 }
-

@@ -98,3 +98,4 @@ class ChecklistService {
 }
 
 export default new ChecklistService()
+

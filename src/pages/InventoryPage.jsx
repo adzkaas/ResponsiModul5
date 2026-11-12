@@ -154,9 +154,9 @@ export default function InventoryPage({
       {/* Page Header */}
       <div className="page-head">
         <div>
-          <h1>Manajemen Inventaris (CRUD)</h1>
+          <h1>Manajemen Inventaris</h1>
           <p className="lede">
-            Kelola data logistik perlengkapan basecamp (Create, Read, Update, Delete) secara instan.
+            Kelola data logistik perlengkapan basecamp secara instan.
           </p>
         </div>
 
@@ -317,8 +317,8 @@ export default function InventoryPage({
             {submitting
               ? 'Menyimpan...'
               : editingId
-              ? 'Simpan Perubahan'
-              : 'Simpan ke Inventaris'}
+                ? 'Simpan Perubahan'
+                : 'Simpan ke Inventaris'}
           </button>
         </div>
       </form>
@@ -389,9 +389,8 @@ export default function InventoryPage({
                     </td>
                     <td>
                       <span
-                        className={`status-dot ${
-                          item.condition === 'Layak Pakai' ? 'ok' : 'warn'
-                        }`}
+                        className={`status-dot ${item.condition === 'Layak Pakai' ? 'ok' : 'warn'
+                          }`}
                       >
                         {item.condition}
                       </span>

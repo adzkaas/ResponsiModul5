@@ -1,4 +1,4 @@
-import { Mountain, Plus } from 'lucide-react'
+import { Mountain, Plus, Download } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'Catalog', label: 'Katalog Alat' },
@@ -7,7 +7,13 @@ const NAV_ITEMS = [
   { id: 'Profile', label: 'Profil Praktikan' },
 ]
 
-export default function Header({ activeTab, onChangeTab, onNavigateCreate }) {
+export default function Header({
+  activeTab,
+  onChangeTab,
+  onNavigateCreate,
+  onInstallApp,
+  isInstalled,
+}) {
   return (
     <header className="header">
       <div
@@ -37,6 +43,17 @@ export default function Header({ activeTab, onChangeTab, onNavigateCreate }) {
       </nav>
 
       <div className="header-actions">
+        {!isInstalled && (
+          <button
+            type="button"
+            className="btn btn--outline btn--sm header-install-btn"
+            onClick={onInstallApp}
+            title="Install aplikasi SummitGear ke layar beranda / desktop"
+          >
+            <Download size={15} color="#e67e22" /> Install App
+          </button>
+        )}
+
         {onNavigateCreate && (
           <button
             type="button"

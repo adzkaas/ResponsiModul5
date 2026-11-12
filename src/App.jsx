@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import PWABadge from './components/PWABadge'
@@ -7,27 +7,15 @@ import InventoryPage from './pages/InventoryPage'
 import ChecklistPage from './pages/ChecklistPage'
 import ProfilePage from './pages/ProfilePage'
 import { useGear } from './hooks/useGear'
+import { usePWAInstall } from './hooks/usePWAInstall'
 import './App.css'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('Catalog')
   const [editingTarget, setEditingTarget] = useState(null)
-  const [isOffline, setIsOffline] = useState(!navigator.onLine)
 
-  const { gears, loading, error, source, addGear, editGear, removeGear, resetGears } = useGear()
-
-  useEffect(() => {
-    const handleOnline = () => setIsOffline(false)
-    const handleOffline = () => setIsOffline(true)
-
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
+  const { gears, loading, error, addGear, editGear, removeGear, resetGears } = useGear()
+  const { isInstalled, isOffline, promptInstall } = usePWAInstall()
 
   const handleNavigateCreate = () => {
     setEditingTarget(null)
@@ -50,6 +38,8 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
         onNavigateCreate={handleNavigateCreate}
+        onInstallApp={promptInstall}
+        isInstalled={isInstalled}
       />
 
       <main className="main-content">
@@ -83,9 +73,12 @@ export default function App() {
         {activeTab === 'Profile' && <ProfilePage />}
       </main>
 
-      <PWABadge />
+      <PWABadge
+        onInstallApp={promptInstall}
+        isInstalled={isInstalled}
+        isOffline={isOffline}
+      />
       <Footer />
     </div>
   )
 }
-
