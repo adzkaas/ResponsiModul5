@@ -2,7 +2,7 @@ import { Mountain, Plus, Download } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'Catalog', label: 'Katalog Alat' },
-  { id: 'Inventory', label: 'Inventaris CRUD' },
+  { id: 'Inventory', label: 'Inventaris' },
   { id: 'Checklist', label: 'Checklist Misi' },
   { id: 'Profile', label: 'Profil Praktikan' },
 ]
