@@ -24,14 +24,14 @@ const EMPTY_FORM = {
 
 export default function InventoryPage({
   gears,
+  loading,
+  error,
   onAdd,
   onEdit,
   onDelete,
   onReset,
   editingTarget,
   onCancelEditTarget,
-  dataSource,
-  isOffline,
 }) {
   const [form, setForm] = useState(() => {
     if (editingTarget) {
@@ -343,12 +343,20 @@ export default function InventoryPage({
               </tr>
             </thead>
             <tbody>
-              {gears.length === 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: 'center', padding: '32px' }}>
+                    <p style={{ margin: '0', color: '#64748b' }}>
+                      Memuat data dari database Supabase...
+                    </p>
+                  </td>
+                </tr>
+              ) : gears.length === 0 ? (
                 <tr>
                   <td colSpan="6" style={{ textAlign: 'center', padding: '32px' }}>
                     <Package size={36} color="#94a3b8" />
                     <p style={{ margin: '8px 0 0', color: '#64748b' }}>
-                      Belum ada perlengkapan yang tersimpan.
+                      Belum ada perlengkapan yang tersimpan di Supabase.
                     </p>
                   </td>
                 </tr>

@@ -12,21 +12,39 @@ import {
 import userService, { DEFAULT_PROFILE } from '../services/userService'
 
 export default function ProfilePage() {
-  const [profile, setProfile] = useState(() => userService.getUserProfile())
-  const [nama, setNama] = useState(profile.nama)
-  const [nim, setNim] = useState(profile.nim)
-  const [kelompok, setKelompok] = useState(profile.kelompok)
-  const [prodi, setProdi] = useState(profile.prodi)
-  const [bio, setBio] = useState(profile.bio)
-  const [avatar, setAvatar] = useState(profile.avatar)
+  const [profile, setProfile] = useState(DEFAULT_PROFILE)
+  const [nama, setNama] = useState(DEFAULT_PROFILE.nama)
+  const [nim, setNim] = useState(DEFAULT_PROFILE.nim)
+  const [kelompok, setKelompok] = useState(DEFAULT_PROFILE.kelompok)
+  const [prodi, setProdi] = useState(DEFAULT_PROFILE.prodi)
+  const [bio, setBio] = useState(DEFAULT_PROFILE.bio)
+  const [avatar, setAvatar] = useState(DEFAULT_PROFILE.avatar)
   const [savedMsg, setSavedMsg] = useState('')
   const [isStandalone, setIsStandalone] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const isStandaloneMode =
       window.matchMedia('(display-mode: standalone)').matches ||
       window.navigator.standalone === true
     setIsStandalone(isStandaloneMode)
+
+    let mounted = true
+    userService.getUserProfile().then((data) => {
+      if (mounted && data) {
+        setProfile(data)
+        setNama(data.nama)
+        setNim(data.nim)
+        setKelompok(data.kelompok)
+        setProdi(data.prodi)
+        setBio(data.bio)
+        setAvatar(data.avatar)
+        setLoading(false)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const handleAvatarChange = (e) => {
@@ -40,17 +58,17 @@ export default function ProfilePage() {
     }
 
     const reader = new FileReader()
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const base64 = event.target.result
       setAvatar(base64)
-      userService.updateAvatar(base64)
-      setSavedMsg('Foto profil berhasil diperbarui.')
+      await userService.updateAvatar(base64)
+      setSavedMsg('Foto profil berhasil diperbarui di Supabase.')
       setTimeout(() => setSavedMsg(''), 3000)
     }
     reader.readAsDataURL(file)
   }
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault()
     const updated = {
       ...profile,
@@ -61,10 +79,10 @@ export default function ProfilePage() {
       bio: bio.trim(),
       avatar,
     }
-    const res = userService.saveUserProfile(updated)
+    const res = await userService.saveUserProfile(updated)
     if (res.success) {
       setProfile(res.data)
-      setSavedMsg('Data profil praktikan berhasil disimpan!')
+      setSavedMsg('Data profil praktikan berhasil disimpan ke Supabase!')
       setTimeout(() => setSavedMsg(''), 3000)
     }
   }
@@ -89,7 +107,7 @@ export default function ProfilePage() {
       <section className="hero">
         <h1>Profil Praktikan PPB</h1>
         <p className="lede">
-          Identitas pengembang aplikasi Progressive Web App (PWA) SummitGear — Basecamp Logistics.
+          Identitas pengembang aplikasi Progressive Web App (PWA) SummitGear — Basecamp Logistics. Data identitas tersimpan di cloud database Supabase.
         </p>
       </section>
 
@@ -160,8 +178,8 @@ export default function ProfilePage() {
           <div className="diag-item">
             <HardDrive size={18} color="#2563eb" />
             <div>
-              <strong>Persistensi Offline</strong>
-              <span>localStorage + Service Worker Aktif</span>
+              <strong>Database Cloud</strong>
+              <span>Supabase REST PostgREST Aktif</span>
             </div>
           </div>
 
@@ -180,7 +198,7 @@ export default function ProfilePage() {
         <div className="crud-form-header">
           <h3>Perbarui Data Identitas</h3>
           <span className="form-sub-note">
-            Sesuaikan data profil jika terdapat revisi identitas praktikan.
+            Sesuaikan data profil praktikan (akan langsung tersimpan ke Supabase).
           </span>
         </div>
 
@@ -252,4 +270,3 @@ export default function ProfilePage() {
     </div>
   )
 }
-

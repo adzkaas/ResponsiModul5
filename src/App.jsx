@@ -56,6 +56,8 @@ export default function App() {
         {activeTab === 'Catalog' && (
           <CatalogPage
             gears={gears}
+            loading={loading}
+            error={error}
             onGoToCrud={handleNavigateCreate}
             onEditGear={handleEditFromCatalog}
             onDeleteGear={(g) => removeGear(g.id)}
@@ -65,14 +67,14 @@ export default function App() {
         {activeTab === 'Inventory' && (
           <InventoryPage
             gears={gears}
+            loading={loading}
+            error={error}
             onAdd={addGear}
             onEdit={editGear}
             onDelete={removeGear}
             onReset={resetGears}
             editingTarget={editingTarget}
             onCancelEditTarget={() => setEditingTarget(null)}
-            dataSource={source}
-            isOffline={isOffline}
           />
         )}
 

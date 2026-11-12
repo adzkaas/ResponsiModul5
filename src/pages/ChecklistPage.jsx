@@ -1,40 +1,39 @@
 import { useState, useEffect, useMemo } from 'react'
-import { CheckSquare, Square, Backpack, Check, SlidersHorizontal, RotateCcw } from 'lucide-react'
-
-const CHECK_KEY = 'summitgear_packed_ids'
+import { CheckSquare, Square, Backpack, Check, RotateCcw } from 'lucide-react'
+import checklistService from '../services/checklistService'
 
 export default function ChecklistPage({ gears }) {
-  const [packedIds, setPackedIds] = useState(() => {
-    try {
-      const saved = localStorage.getItem(CHECK_KEY)
-      return saved ? JSON.parse(saved) : []
-    } catch {
-      return []
-    }
-  })
-
+  const [packedIds, setPackedIds] = useState([])
   const [filterMode, setFilterMode] = useState('all') // 'all' | 'packed' | 'unpacked'
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    try {
-      localStorage.setItem(CHECK_KEY, JSON.stringify(packedIds))
-    } catch (e) {
-      console.warn('Gagal menyimpan checklist:', e)
+    let mounted = true
+    checklistService.getPackedIds().then((ids) => {
+      if (mounted) {
+        setPackedIds(ids)
+        setLoading(false)
+      }
+    })
+    return () => {
+      mounted = false
     }
-  }, [packedIds])
+  }, [])
 
-  const toggleItem = (id) => {
-    setPackedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-    )
+  const toggleItem = async (id) => {
+    const isPacked = !packedIds.includes(id)
+    setPackedIds((prev) => (isPacked ? [...prev, id] : prev.filter((item) => item !== id)))
+    await checklistService.toggleItem(id, isPacked)
   }
 
-  const handleCheckAll = () => {
-    setPackedIds(gears.map((g) => g.id))
+  const handleCheckAll = async () => {
+    const ids = await checklistService.setAll(gears, true)
+    setPackedIds(ids)
   }
 
-  const handleUncheckAll = () => {
-    setPackedIds([])
+  const handleUncheckAll = async () => {
+    const ids = await checklistService.setAll(gears, false)
+    setPackedIds(ids)
   }
 
   const packedGears = useMemo(
@@ -70,7 +69,7 @@ export default function ChecklistPage({ gears }) {
         <h1>Checklist Persiapan Ekspedisi</h1>
         <p className="lede">
           Pastikan setiap perlengkapan vital telah terkemas ke dalam carrier. Pantau total beban
-          yang akan dipikul sebelum keberangkatan.
+          yang akan dipikul sebelum keberangkatan. Data checklist tersinkronisasi langsung dengan Supabase.
         </p>
 
         {/* Progress & Stat Cards */}
@@ -132,7 +131,11 @@ export default function ChecklistPage({ gears }) {
 
       {/* Checklist List */}
       <div className="checklist-list">
-        {displayedGears.length === 0 ? (
+        {loading ? (
+          <div className="empty-box">
+            <p>Memuat status checklist dari Supabase...</p>
+          </div>
+        ) : displayedGears.length === 0 ? (
           <div className="empty-box">
             <p>Tidak ada perlengkapan pada kategori filter ini.</p>
           </div>
@@ -168,4 +171,3 @@ export default function ChecklistPage({ gears }) {
     </div>
   )
 }
-

@@ -4,11 +4,16 @@ import axios from 'axios'
 // Base URL & Supabase Key Configuration
 // Read from environment variables (.env)
 // ---------------------------------------------------------------------------
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
+const rawBase = (import.meta.env.VITE_API_BASE_URL || '').trim()
+// Bersihkan jika ada /rest/v1 atau trailing slash di env agar tidak terjadi URL ganda (/rest/v1/rest/v1/)
+const BASE_URL = rawBase.replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '')
+
 const SUPABASE_KEY =
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  ''
+  (
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+    import.meta.env.VITE_SUPABASE_ANON_KEY ||
+    ''
+  ).trim()
 
 const IS_SUPABASE =
   Boolean(BASE_URL) && (BASE_URL.includes('supabase.co') || Boolean(SUPABASE_KEY))
@@ -55,10 +60,11 @@ apiClient.interceptors.response.use(
         error.response.data?.message ||
         error.response.data?.msg ||
         error.response.data?.error ||
-        error.response.data?.error_description ||
-        `Kesalahan server (${status})`
+        error.response.data?.hint ||
+        error.response.data?.details ||
+        `Kesalahan server Supabase (${status})`
     } else if (error.request) {
-      message = 'Gagal terhubung ke server backend / Supabase. Beralih ke cache offline.'
+      message = 'Gagal terhubung ke database Supabase. Periksa koneksi internet Anda.'
     } else {
       message = error.message || message
     }
@@ -73,4 +79,3 @@ apiClient.interceptors.response.use(
 )
 
 export { apiClient, BASE_URL, SUPABASE_KEY, IS_SUPABASE }
-

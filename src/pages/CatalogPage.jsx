@@ -1,8 +1,15 @@
 import { useState, useMemo } from 'react'
-import { Search, Scale, Package, SlidersHorizontal, Eye } from 'lucide-react'
+import { Search, Scale, Package, SlidersHorizontal, Eye, AlertCircle } from 'lucide-react'
 import GearDetailModal from '../components/modals/GearDetailModal'
 
-export default function CatalogPage({ gears, onGoToCrud, onEditGear, onDeleteGear }) {
+export default function CatalogPage({
+  gears,
+  loading,
+  error,
+  onGoToCrud,
+  onEditGear,
+  onDeleteGear,
+}) {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Semua')
   const [sortBy, setSortBy] = useState('default')
@@ -115,7 +122,18 @@ export default function CatalogPage({ gears, onGoToCrud, onEditGear, onDeleteGea
       </div>
 
       {/* Grid of Gear Cards */}
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="empty-box">
+          <p>Memuat data perlengkapan dari Supabase...</p>
+        </div>
+      ) : error ? (
+        <div className="toast toast--error">
+          <AlertCircle size={20} />
+          <div>
+            <strong>Gagal Memuat dari Supabase:</strong> {error}
+          </div>
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="empty-box">
           <Package size={48} color="#94a3b8" />
           <h3>Tidak ada perlengkapan yang cocok</h3>
